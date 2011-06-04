@@ -31,12 +31,33 @@ module Refinery
       end
 
       def to_refinery
+        print "."
         user = ::User.find_by_username(creator) || ::User.first
         raise "Referenced User doesn't exist! Make sure the authors are imported first." \
           unless user
-        
+            
+        # check to see if post has a bookmark (only ivanenviroman.com)
+        isBookmark = false
+        bookmark_url = " " 
+        meta_keys = node.xpath("wp:postmeta/wp:meta_key")
+        if meta_keys.size > 0
+          ib_index = 0
+          sp_index = 0
+          meta_keys.each do |key|
+            if key.text == "isBookmark"
+              isBookmark = true
+            end
+            if key.text == "syndication_permalink"
+              meta_values = node.xpath("wp:postmeta/wp:meta_value")
+              bookmark_url = meta_values[sp_index].text
+            end
+            ib_index += 1
+            sp_index += 1
+          end
+        end
+       
         begin
-          post = ::BlogPost.new :title => title, :body => content_formatted, 
+          post = ::BlogPost.new :title => title, :body => content_formatted  + "Read more at here: #{bookmark_url} ", 
             :draft => draft?, :published_at => post_date, :created_at => post_date, 
             :author => user, :tag_list => tag_list
           post.save!
