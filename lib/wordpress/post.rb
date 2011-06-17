@@ -55,10 +55,27 @@ module Refinery
             sp_index += 1
           end
         end
-       
-        begin
-          post = ::BlogPost.new :title => title, :body => content_formatted  + "Read more at here: #{bookmark_url} ", 
-            :draft => draft?, :published_at => post_date, :created_at => post_date, 
+
+        if isBookmark
+          begin
+            #make a bookmark link
+            bookmark = ::Link.new :title => title,
+                                  :link => bookmark_url,
+                                  :body => content_formatted,
+                                  :draft => draft?,
+                                  :published_at => post_date,
+                                  :created_at => post_date,
+                                  :author => user,
+                                  :tag_list => tag_list
+            bookmark.save!
+          rescue
+            #report a link (bookmark) error
+          end
+        else
+          #create a post
+          begin
+          post = ::BlogPost.new :title => title, :body => content_formatted  + "Read more at here: #{bookmark_url} ",
+            :draft => draft?, :published_at => post_date, :created_at => post_date,
             :author => user, :tag_list => tag_list
           post.save!
 
@@ -73,12 +90,15 @@ module Refinery
               comment.save
             end
           end
-        rescue ActiveRecord::RecordInvalid 
+        rescue ActiveRecord::RecordInvalid
           # if the title has already been taken (WP allows duplicates here,
           # refinery doesn't) append the post_id to it, making it unique
           post.title = "#{title}-#{post_id}"
           post.save
         end
+        end
+       
+
 
         post
       end

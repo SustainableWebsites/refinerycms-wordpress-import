@@ -7,3 +7,4 @@ spec/dummy/tmp/
 *.un~
 refinerycms-wordpress-import-*.gem
 *.swp
+.idea
