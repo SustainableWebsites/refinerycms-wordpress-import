@@ -20,5 +20,6 @@ end
 # gem 'ruby-debug19'
 
 gem 'refinerycms'
-gem 'refinerycms-blog'
+#gem 'refinerycms-blog', :path => "/Users/ivan/Development/ruby/refinerycms-link"
+gem 'refinerycms-blog', :git => "git@github.com:SustainableWebsites/refinerycms-blog.git"
 gem 'refinerycms-wordpress-import', :path => './'
