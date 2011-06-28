@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "rails", "3.0.7"
+gem "rails", "3.0.9"
 #gem "capybara", ">= 1.0.0.beta1"
 gem "sqlite3"
 gem "rmagick"
@@ -20,6 +20,5 @@ end
 # gem 'ruby-debug19'
 
 gem 'refinerycms'
-#gem 'refinerycms-blog', :path => "/Users/ivan/Development/ruby/refinerycms-link"
-gem 'refinerycms-blog', :git => "git@github.com:SustainableWebsites/refinerycms-blog.git"
-gem 'refinerycms-wordpress-import', :path => './'
+gem 'refinerycms-blog', :path => "/Users/ivan/Development/ruby/refinerycms-link"
+#gem 'refinerycms-blog', :git => "git@github.com:SustainableWebsites/refinerycms-blog.git"
